@@ -1,0 +1,7 @@
+.idea/
+venv/
+cache/
+debug/
+auto_walk*
+lipa*
+export*
