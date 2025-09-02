@@ -130,7 +130,6 @@ def run_auto_walk(waypoints):
             time.sleep(3)
         except Exception:
             pass
-
         try:
             WebDriverWait(driver, 20).until(
                 EC.presence_of_all_elements_located((By.TAG_NAME, "canvas"))
@@ -142,10 +141,10 @@ def run_auto_walk(waypoints):
             log("Nie znaleziono elementu <canvas> w ciągu 20s.")
             save_remaining_points(waypoints, i-1 if i > 0 else 0)
             log("Czekam 2 minuty przed ponownym uruchomieniem...")
-            time.sleep(10)
+            time.sleep(120)
             driver.quit()
             shutil.rmtree(temp_profile, ignore_errors=True)
-            main()  # restart działania z pozostałymi punktami
+            main()
             return
 
         canvas_to_rectangle_with_dimensioning()
