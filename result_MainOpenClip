@@ -1,0 +1,221 @@
+Opis:
+
+50 najlepszych wynikow
+Interpolacja 30 metrow
+Promień 180 od (x,y) - zdjęcia mam z dwóch takich obszarów - pokrycie od narwiku do mojego bloku plus minus
+
+Wyniki:
+
+Katalog; Pozycja; Skutecznosc (0 lub 1) (policzyc tez liczac odwrotnosc pozycji pierwszego poprawnego wyniku)
+1 ; [2, 1] ; 1
+2 ; [2,2] ; 1
+3 ; [1,1] ; 1
+4 ; [2, 1] ; 1
+5 ; [1,1] ; 1 *
+#6 - duplikat
+7 ; [3,2] ; 1
+8 ; [0,1] ; 0 - dodalem zdjecie, wiec nie bylo pokrycia
+#9 - brak pokrycja dla tego miejsca, ale znalazl obok
+10 ; [5, 49]; 1 - garaz - jak ktos nie mieszka tu to by nie wiedzial, duzo sie zmienilo - sprawdzic w kolejnej iteracji - wrzucilem zdjecie garazu, pod innym katem i dopiero na 49 znalazlo
+11 ; 0 ; 0 - patio u mnie - ulice znalazl poprawna
+
+
+
+12 ; [6, 28] ; 1
+13 ; [1, 1] ; 1
+14 ; [9, 7] ; 1
+15 ; 0 ; 0 * patio
+16 ; 0 ; 0 * patio
+17 ; 0 ; 0 * drzewo na froncie zdjecia - dodalem plik ze zdjeciem i wyszukal elegancko
+18 ; [8,3] ; 1
+19 ; [1,1] ; 1
+20 ; 0 ; 0 * do sprawdzenia czy mam pokrycie tego - to nowy blok kolo mnie
+21 ; [0,46] ; 0 * do sprawdzenia przyczyne
+22 ; [1,4] ; 1
+23 ; [1,1] ; 1
+24 ; [1,2] ; 1
+25 ; 0 ; 0 - dokladnie tego bloku nie wyswietlilo ale blok obok ktory jest podobny, moze nie pokrywam go?
+26 - duplikat
+27 ; [21,7] ; 1 - :/
+28 ; [3,7] ; 1
+29 ; 0 ; 0 - zamkniete osiedle - do sprawdzenia, bo ktos tam robil zdjecia powinienem miec
+30 ; [2,1] ; 1
+31 ; 0 ; 0 - ten sam kejs co w 25 przy czym chyba w 31 w wyniku wyswietlilo blok d.jpg z 25
+32 ; 6 ; 0
+33 ; 30 ; 1 - do sprawdzenia
+34 ; 1 ; 1
+
+2/3 skutecznosc
+
+
+test na wiekszym zbiorze, ujete jest powstancow slaskich ; bez aug ; z aug ale bez greycostam
+test 2 i 3 bez zmian
+1) 1 ; 1 ; 1
+2) 11 ; 1 ; 1
+3) 1 ; 1 ; 1
+4) 2 ; 1 ; 1
+5) 25 ; 48 (blok obok juz na drugim zdjeciu widac w obu przypadkach plus minus) ; 48
+6) X - duplikat numeru 4 (furtka zielona)
+7) 5 ; 1 ; 1- przy aptece na koncu
+8) 1 ; 1 ; 1
+9) 8 ; 2 ; 2- warzywniak kolo nas, ale blok obok zlokalizowal juz wczesniej
+10) 7 ; 14 ; 14(dokladna pozycja versus 16 z pierwszego testu) - garaz nieszczesny. na pozycji 7 widac go juz, dokladne dopasowanie na 16 pozycji
+11) 5 ; gorzej- patio nasze, ale blok obok zlokalizowal na 5 pozycji
+12) 15 ; 17 ; 17
+13) 2 ; 1 ; 1
+14) 31 ; 24 ; 24- na trzecim miejscu blok obok zlokalizowal
+15) staw, na 18 zdjeciu widac blok, na 41 znalazl blok
+16) chyba duplikat 15?
+17) 1 ; 1
+18) 5 ; 1
+19) 1 ; 3 (na pierwszym byl blok obok)
+20) 1 ; 3 ; 3
+21) 0 ; 0 sklep na koncu
+22) 1 ; 1
+23) 1 (albo drugi) ; 2
+24) 2 albo 3 ; 1
+25) 0 ; 0(ale blok obok znalazl)
+26) 5 ; 1
+27) 2 ; 3
+28) 3 ; 2
+29) 0 ; 0
+30) 3 ; 3
+31) 0 ; 0 ale blok obok jest
+32) 0 ; 0- tu nie wiem o co kaman
+33) 0 - jak wyzej to to samo chyba
+34) 2 ;1
+
+
+10 metrow model laptopowy versus model na chmurze ; dino2 ; dino3(todo)
+
+1) 1 ? 1
+2) 2 ? 1
+3) 1 ? 1
+4) 1 ? 1
+5) 0 ? 1
+6) duplikat
+7) 0 ? 0
+8) 12 ? 1
+9) 2 ? 1
+10) 8 ? 1
+11) 0 ? 1
+12) 11 ? 1
+13) 1 ? 1
+14) 1 ? 3
+15) 0 ? 1
+16) 0 ? 6
+17) 18 ? 2
+18) 4 ? 1
+19) 5 ? 1
+20) 2 ? 1
+21) 0 ? 0
+22) 1 ? 1
+23) 22 ? 2
+24) 1 ? 1
+25) 0 (na 1 widac blok obok) ? tak samo
+26) 4 ? 1
+27) 24 ? 1
+28) 2 ? 1
+29) 0 ? 1
+30) 3 ? 1
+31) 4 (na 1. widac blok obok) ? lepiej
+32) 26 ? 10
+33) 0 ? 15
+34) 1 ? 1
+
+
+
+dino3; dino2
+
+1) 1 1 1
+2) 5 7 1
+3) 1 1 1
+4) 1 1 1
+5) 0 3 2
+6) 1 1 1
+7) 0 0 0
+8) 1 1 1
+9) 1 1 1
+10) 1 1 1
+11) 1 1 1
+12) 0 6 35
+13) 1 1 1
+14) brak pokrycia w bazie zdjec - skipuje
+15) 1 2 1
+16) 1 1 1
+17) 3 1 1
+18) 1 1 1
+19) prawdopodobnie brak pokrycia - skipuje - do sprawdzenia
+20) prawdopodobnie brak pokrycia - skipuje - do sprawdzenia
+21) 8* 1* 1
+22) 1* 1* 1*
+23) 1 1 1
+24) 1 2 2
+25) 22 1 1
+26) 6 1* 1*
+27) 1 2 2
+28) brak pokrycia w bazie zdjec - skipuje
+29) 1 1 1
+30) 1* 1 1
+31) 1* 1 1
+32) prawdopodobnie brak pokrycia - skipuje - do sprawdzenia
+33) 1 1 1
+34) 0 43 27 27
+35) brak pokrycia w bazie zdjec - skipuje
+36) 2 1 1
+37) brak pokrycia w bazie zdjec - skipuje
+38) 0 0 0
+39) 1 1 1
+40) 1 1 1
+41) 3 4 1
+42) 13 1 2
+43) brak pokrycia w bazie zdjec - skipuje
+44) 7 4 0
+45) 1 1 5
+46) 0 1 1
+47) 7 1 1
+48) 1 1 1
+49) 10 1 1
+50) brak pokrycia w bazie zdjec - skipuje
+51) 1 1 1
+52) 1 1 1
+53) 0 1 1
+54) 1* 3 3
+55) 1 1 1
+56) 2 1 1
+57) 1* 1 1
+58) 0 0 0
+59) 1* 1* 1*
+60) 5 1 2
+61) 1 1 1
+62) 1* 1* 1*
+63) brak pokrycia w bazie zdjec - skipuje
+64) 1 1 1
+65) 0 1 1
+66) 2 4 1
+67) 1 1 1
+68) brak pokrycia w bazie zdjec - skipuje
+69) 0 1 20
+70) 1 1 1
+71) 1 1 1
+72) 5 1 1
+73) 1* 1* 1*
+74) 1* 1* 1
+75) 49 11 6
+76) 0 0 0
+77) 1 1 7
+78) 1 1 1
+79) 1 1 1
+80) 1* 1* 1
+81) 0 0 37
+82) 1 1 1
+83) 0 10 31
+84) 0 15 17
+85) 1 1 1
+
+Liczba dokładnych trafień (wartość > 0 bez gwiazdki) dla każdego modelu
+Liczba trafień z gwiazdką (do wspomnianych 200 metrów)
+Liczba porównań, gdzie DINOv3 lepiej odnalazł obiekt (mniejszy numer zdjęcia) i odwrotnie
+Liczba porównań, gdzie modele znalazły obiekt na tym samym zdjęciu
+Podsumowanie i wskazanie modelu, który wypadł lepiej
+
