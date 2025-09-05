@@ -95,7 +95,7 @@ def calculate_x_y_of_canvas_center():
 def setup_driver():
     opts = Options()
     # opts.add_argument("--headless")  # jeśli potrzebujesz uruchomić bez GUI
-    opts.add_argument("--window-size=1200,800")
+    opts.add_argument("--window-size=1920,1080")
     opts.add_argument('--no-sandbox')
     opts.add_argument('--disable-dev-shm-usage')
     opts.add_argument('--disable-gpu')
