@@ -18,7 +18,9 @@ from PIL import Image
 import tempfile
 
 LOG_FILE = "log_auto_walk.txt"
-INPUT_FILE = "part_2.json"
+INPUT_DIR = '/app/input_files'
+INPUT_FILE_NAME = os.environ.get('INPUT_FILE', 'part_4.json')
+INPUT_FILE = os.path.join(INPUT_DIR, INPUT_FILE_NAME)
 
 def log(message):
     time_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -157,6 +159,7 @@ def main():
     global driver
     driver = setup_driver()
     log(f"Używany katalog profilu Chrome: {temp_profile}")
+    log(f"Używany plik wejściowy: {INPUT_FILE}")
 
     if not os.path.exists(INPUT_FILE) or os.stat(INPUT_FILE).st_size == 0:
         log(f"Brak punktów do przetworzenia w pliku {INPUT_FILE}. Kończę działanie.")
