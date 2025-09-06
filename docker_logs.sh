@@ -1,0 +1,1 @@
+sudo docker logs -f `sudo docker ps |awk -F ' ' '{print$1}' |grep -v CONTAINER`
