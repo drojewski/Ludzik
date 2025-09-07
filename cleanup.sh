@@ -1,2 +1,2 @@
-rm auto_walk_screenshots/*
-rm auto_walk_screenshots/up_images/*
+sudo rm -rf auto_walk_screenshots
+sudo rm log*.txt
