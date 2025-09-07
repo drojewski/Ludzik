@@ -7,4 +7,16 @@
 #  drojewski/geoaga:latest
 
 #ustawic nazwe pliku w INPUT_FILE!!
-sudo docker run -it --rm -e DISPLAY=$DISPLAY -e XAUTHORITY=/home/drojewski/.Xauthority -v /tmp/.X11-unix/:/tmp/.X11-unix -v /home/drojewski/.Xauthority:/home/drojewski/.Xauthority:ro -v /tmp/auto_walk_screenshots:/app/auto_walk_screenshots -e INPUT_FILE=part_5.json -v /home/drojewski:/app/input_files drojewski/geoaga:latest
+INPUT_FILE=part_5.json
+LOG_FILE="log_auto_walk_${INPUT_FILE}.txt"
+
+sudo docker run -it --rm \
+  -e DISPLAY=$DISPLAY \
+  -e XAUTHORITY=/home/drojewski/.Xauthority \
+  -v /tmp/.X11-unix/:/tmp/.X11-unix \
+  -v /home/drojewski/.Xauthority:/home/drojewski/.Xauthority:ro \
+  -v /tmp/auto_walk_screenshots:/app/auto_walk_screenshots \
+  -e INPUT_FILE=$INPUT_FILE \
+  -v /home/drojewski:/app \
+  -v /home/drojewski/$LOG_FILE:/app/$LOG_FILE \
+  drojewski/geoaga:latest

@@ -17,10 +17,10 @@ import pyautogui
 from PIL import Image
 import tempfile
 
-LOG_FILE = "log_auto_walk.txt"
 INPUT_DIR = '.'
 INPUT_FILE_NAME = os.environ.get('INPUT_FILE', 'part_4.json')
 INPUT_FILE = os.path.join(INPUT_DIR, INPUT_FILE_NAME)
+LOG_FILE = f"log_auto_walk_{INPUT_FILE_NAME}.txt"
 
 
 OUT_DIR = "auto_walk_screenshots"
