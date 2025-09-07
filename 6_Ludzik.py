@@ -22,6 +22,13 @@ INPUT_DIR = '.'
 INPUT_FILE_NAME = os.environ.get('INPUT_FILE', 'part_4.json')
 INPUT_FILE = os.path.join(INPUT_DIR, INPUT_FILE_NAME)
 
+
+OUT_DIR = "auto_walk_screenshots"
+UP_IMG_DIR = os.path.join(OUT_DIR, "up_images")
+os.makedirs(OUT_DIR, exist_ok=True)
+os.makedirs(UP_IMG_DIR, exist_ok=True)
+PAUSE = 2
+
 def log(message):
     time_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     line = f"[{time_str}] {message}"
@@ -41,26 +48,20 @@ def go_to_center():
 def full_rotation(pano, step_px=600, degree_per_step=45):
     go_to_center()
     steps = int(360 / degree_per_step)
-
     for step in range(steps):
         pyautogui.mouseDown()
         pyautogui.moveRel(-step_px, 0, duration=1)
         pyautogui.mouseUp()
         go_to_center()
         take_photo(pano, is_up_image=False)
-
-        # Ruch myszą w górę
         pyautogui.mouseDown()
         pyautogui.moveRel(0, 500, duration=0.3)
         pyautogui.mouseUp()
         take_photo(pano, is_up_image=True)
-
-        # Powrót w dół do pozycji
         pyautogui.mouseDown()
         pyautogui.moveRel(0, -500, duration=0.3)
         pyautogui.mouseUp()
         go_to_center()
-
     go_to_center()
 
 def resize_image(path, size=(640, 640)):
@@ -107,13 +108,26 @@ def setup_driver():
     service = Service(ChromeDriverManager().install())
     return webdriver.Chrome(service=service, options=opts)
 
+def find_last_processed_index():
+    if not os.path.exists(LOG_FILE):
+        return -1
+    with open(LOG_FILE, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+    for line in reversed(lines):
+        if "Otwieram punkt" in line:
+            try:
+                num = int(line.split("Otwieram punkt")[1].split("z")[0].strip())
+                return num - 1
+            except Exception:
+                continue
+    return -1
+
 def run_auto_walk(waypoints):
     global canvas, driver, i, lat, lng
     total = len(waypoints)
     for i, point in enumerate(waypoints):
         lat, lng = point["coordinates"]
         pano_id = point.get("pano_id", "[brak pano_id]")
-
         url = (
             f"https://www.google.com/maps/@?api=1&map_action=pano"
             f"&viewpoint={lat},{lng}"
@@ -121,9 +135,7 @@ def run_auto_walk(waypoints):
         driver.get(url)
         log(f"Otwieram punkt {i + 1} z {total}: {lng}, {lat}, pano_id: {pano_id}")
         log(f"Pozostało punktów: {total - (i + 1)}")
-
         time.sleep(1)
-
         try:
             btn = driver.find_element(By.XPATH,
                 "//button[normalize-space()='Zaakceptuj wszystko' or normalize-space()='I agree']")
@@ -141,18 +153,16 @@ def run_auto_walk(waypoints):
             canvas = canvases[0]
         except TimeoutException:
             log("Nie znaleziono elementu <canvas> w ciągu 20s.")
-            save_remaining_points(waypoints, i-1 if i > 0 else 0)
+            #save_remaining_points(waypoints, i-1 if i > 0 else 0)
             log("Czekam 2 minuty przed ponownym uruchomieniem...")
-            time.sleep(120)
+            time.sleep(30)
             driver.quit()
             shutil.rmtree(temp_profile, ignore_errors=True)
             main()
             return
-
         canvas_to_rectangle_with_dimensioning()
         calculate_x_y_of_canvas_center()
         full_rotation(pano_id)
-
         log(f"[{i}] zapisano screenshot")
 
 def main():
@@ -160,6 +170,16 @@ def main():
     driver = setup_driver()
     log(f"Używany katalog profilu Chrome: {temp_profile}")
     log(f"Używany plik wejściowy: {INPUT_FILE}")
+
+    last_idx = find_last_processed_index()
+    if os.path.exists(INPUT_FILE):
+        with open(INPUT_FILE, "r", encoding="utf-8") as f:
+            waypoints = json.load(f)
+        if last_idx >= 0 and last_idx < len(waypoints):
+            waypoints = waypoints[last_idx:]
+            with open(INPUT_FILE, "w", encoding="utf-8") as f:
+                json.dump(waypoints, f, ensure_ascii=False, indent=2)
+            log(f"Przycięto plik wejściowy, zaczynając od punktu {last_idx + 1} (pominęto {last_idx} punktów).")
 
     if not os.path.exists(INPUT_FILE) or os.stat(INPUT_FILE).st_size == 0:
         log(f"Brak punktów do przetworzenia w pliku {INPUT_FILE}. Kończę działanie.")
@@ -169,19 +189,10 @@ def main():
 
     with open(INPUT_FILE, "r", encoding="utf-8") as f:
         waypoints = json.load(f)
-
     run_auto_walk(waypoints)
-
     driver.quit()
     shutil.rmtree(temp_profile, ignore_errors=True)
     log("Zakończono automatyczną wycieczkę Pegmanem.")
 
-# Konfiguracja katalogów i zmiennych globalnych
-OUT_DIR = "auto_walk_screenshots"
-UP_IMG_DIR = os.path.join(OUT_DIR, "up_images")
-os.makedirs(OUT_DIR, exist_ok=True)
-os.makedirs(UP_IMG_DIR, exist_ok=True)
-PAUSE = 2
-
-# Start programu
-main()
+if __name__ == '__main__':
+    main()
