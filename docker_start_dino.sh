@@ -1,0 +1,1 @@
+docker run --gpus all -it --rm drojewski/geoaga:latest python3 /app/6_MainDino.py

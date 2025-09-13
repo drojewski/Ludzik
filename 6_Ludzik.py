@@ -18,7 +18,7 @@ from PIL import Image
 import tempfile
 
 INPUT_DIR = '.'
-INPUT_FILE_NAME = os.environ.get('INPUT_FILE', 'part_6.json')
+INPUT_FILE_NAME = os.environ.get('INPUT_FILE', 'part_9.json')
 INPUT_FILE = os.path.join(INPUT_DIR, INPUT_FILE_NAME)
 LOG_FILE = f"log_auto_walk_{INPUT_FILE_NAME}.txt"
 

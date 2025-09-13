@@ -18,6 +18,7 @@ RUN wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | apt-key add
 RUN apt-get update && apt-get install -y git
 RUN apt-get update && apt-get install -y python3-tk python3-dev
 RUN apt-get update && apt-get install -y libxss1 libappindicator3-1 libindicator7
+RUN apt-get update && apt-get install -y libglib2.0-0 libsm6 libxext6 libxrender-dev
 
 # Instalacja ChromeDriver
 RUN CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE) && \
@@ -33,7 +34,10 @@ WORKDIR /app
 COPY *.py /app/
 COPY part_2.json /app/
 COPY requirements.txt /app/
-# Instalacja pakietów Pythonowych
+RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
+RUN pip3 install timm numpy pillow tqdm faiss-cpu
+RUN pip3 install faiss-gpu
+
 RUN pip3 install --no-cache-dir -r requirements.txt
 
 # Uruchomienie aplikacji
