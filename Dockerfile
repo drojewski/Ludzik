@@ -32,7 +32,7 @@ WORKDIR /app
 
 # Kopiowanie plików projektu
 COPY *.py /app/
-COPY part_2.json /app/
+COPY part_*.json /app/
 COPY requirements.txt /app/
 RUN pip3 install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu118
 RUN pip3 install timm numpy pillow tqdm faiss-cpu
